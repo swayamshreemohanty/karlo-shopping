@@ -15,12 +15,12 @@ class CartItemWidget extends StatelessWidget {
   }) : super(key: key);
 
   _titleTextStyle() => TextStyle(
-        fontSize: 18.sp,
+        fontSize: 15.sp,
         fontWeight: FontWeight.bold,
       );
 
   _priceTextStyle() => TextStyle(
-        fontSize: 16.sp,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w300,
       );
 
@@ -39,11 +39,12 @@ class CartItemWidget extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     SizedBox(
-                        height: 80.h,
-                        width: 100.w,
+                        height: 100.h,
+                        width: 120.w,
                         child: ProductImage(
                           product: cartproduct.product,
                         )),
+                    SizedBox(width: 10.w),
                     Padding(
                       padding: EdgeInsets.only(left: 8.w),
                       child: Column(
