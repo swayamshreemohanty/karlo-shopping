@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/cart/logic/cart_management/cart_management_cubit.dart';
 import 'package:shopping_app/cart/logic/checkout/checkout_cubit.dart';
 import 'package:shopping_app/cart/widget/cart_item_widget.dart';
+import 'package:shopping_app/home/widgets/app_bar_header.dart';
 import 'package:shopping_app/utility/loading_indicator.dart';
 
 class CartScreen extends StatefulWidget {
@@ -28,16 +29,7 @@ class _CartScreenState extends State<CartScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Your Cart",
-          style: TextStyle(
-            fontSize: 20,
-            letterSpacing: 3,
-            fontWeight: FontWeight.w700,
-            fontFamily: 'Lato',
-            color: Colors.black,
-          ),
-        ),
+        title: const AppBarHeader(title: "Your Cart"),
       ),
       body: Container(
         color: Colors.white,
@@ -94,9 +86,9 @@ class _CartScreenState extends State<CartScreen> {
                             ]),
                             ElevatedButton(
                               style: ButtonStyle(
-                                foregroundColor: MaterialStateProperty.all(
-                                  Colors.white,
-                                ),
+                                // foregroundColor: MaterialStateProperty.all(
+                                //   Colors.white,
+                                // ),
                                 overlayColor: MaterialStateProperty.all(
                                   Colors.transparent,
                                 ),
@@ -127,7 +119,7 @@ class _CartScreenState extends State<CartScreen> {
                                         height: 20.h,
                                         width: 20.w,
                                         child: const LoadingIndicator(
-                                          color: Colors.white,
+                                          color: Colors.black,
                                         ),
                                       );
                                     } else {
