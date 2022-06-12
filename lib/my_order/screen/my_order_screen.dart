@@ -1,7 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:shopping_app/cart/model/cart_product_model.dart';
+import 'package:shopping_app/home/widgets/app_bar_header.dart';
 import 'package:shopping_app/my_order/logic/my_order/myorder_cubit.dart';
 import 'package:shopping_app/my_order/widget/my_order_widget.dart';
 import 'package:shopping_app/utility/loading_indicator.dart';
@@ -17,16 +20,7 @@ class MyOrderScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Orders",
-          style: TextStyle(
-            fontSize: 20,
-            letterSpacing: 3,
-            fontWeight: FontWeight.w700,
-            fontFamily: 'Lato',
-            color: Colors.black,
-          ),
-        ),
+        title: const AppBarHeader(title: "Orders"),
       ),
       body: StreamBuilder<List<CartProductSummary?>>(
         stream: context.read<MyorderCubit>().fetchOrders(),
@@ -48,9 +42,12 @@ class MyOrderScreen extends StatelessWidget {
                   position: index,
                   duration: const Duration(milliseconds: 375),
                   child: ScaleAnimation(
-                    child: Card(
-                      child: MyOrderWidget(
-                        cartproductsummary: logs[index]!,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.h),
+                      child: Card(
+                        child: MyOrderWidget(
+                          cartproductsummary: logs[index]!,
+                        ),
                       ),
                     ),
                   ),
