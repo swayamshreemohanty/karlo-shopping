@@ -31,4 +31,12 @@ class ProductModel {
       productDescription: (map['productDescription'] ?? '') as String,
     );
   }
+  factory ProductModel.blankInitialize() {
+    return ProductModel(
+      productImageUrl: '',
+      productName: '',
+      productPrice: '',
+      productDescription: '',
+    );
+  }
 }
