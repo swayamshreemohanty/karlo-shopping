@@ -1,12 +1,15 @@
-
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_app/authentication/logic/authentication/google_authentication_bloc.dart';
 
 class AppDrawer extends StatelessWidget {
-  AppDrawer(this.displayName, this.email, this.photoUrl);
-  final String displayName;
-  final String email;
-  final String photoUrl;
+  final User userDetails;
+  const AppDrawer({
+    Key? key,
+    required this.userDetails,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,57 +18,43 @@ class AppDrawer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            decoration: BoxDecoration(color: Colors.indigo),
+            decoration: const BoxDecoration(color: Colors.indigo),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: NetworkImage('$photoUrl'),
+              backgroundImage: NetworkImage('${userDetails.photoURL}'),
             ),
             accountName: Text(
-              '$displayName',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+              '${userDetails.displayName}',
             ),
             accountEmail: Text(
-              '$email',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              ),
+              '${userDetails.email}',
             ),
           ),
           Card(
             elevation: 2,
             child: ListTile(
-              leading: Icon(Icons.exit_to_app_rounded),
-              title: Text('Log Out'),
+              leading: const Icon(Icons.exit_to_app_rounded),
+              title: const Text('Log Out'),
               onTap: () {
                 showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    title: Text("Are you sure!"),
-                    content: Text("You are about to logout!"),
+                    title: const Text("Are you sure!"),
+                    content: const Text("You are about to logout!"),
                     actions: [
-                      RaisedButton(
-                        elevation: 0,
-                        color: Colors.white,
+                      ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('No'),
+                        child: const Text('No'),
                       ),
-                      RaisedButton(
-                        elevation: 0,
-                        color: Colors.white,
+                      ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          // FirebaseAuth.instance.signOut();
-                          // Provider.of<Authentication>(context, listen: false)
-                          //     .signOut(context: context);
+                          context
+                              .read<GoogleAuthenticationBloc>()
+                              .add(LoggedOut(context: context));
                         },
-                        child: Text('Yes'),
+                        child: const Text('Yes'),
                       ),
                     ],
                   ),
