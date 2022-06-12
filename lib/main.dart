@@ -13,6 +13,7 @@ import 'package:shopping_app/config/routes/application_page_routes.dart';
 import 'package:shopping_app/firebase_options.dart';
 import 'package:shopping_app/home/repository/user_role.dart';
 import 'package:shopping_app/home/screens/home_screen.dart';
+import 'package:shopping_app/my_order/logic/my_order/myorder_cubit.dart';
 import 'package:shopping_app/product_management/logic/product_management/productmanagement_bloc.dart';
 import 'package:shopping_app/utility/loading_screen.dart';
 
@@ -71,6 +72,9 @@ class _MyAppState extends State<MyApp> {
               cartManagementCubit: context.read<CartManagementCubit>(),
             ),
           ),
+          BlocProvider<MyorderCubit>(
+            create: (context) => MyorderCubit(),
+          )
         ],
         child: ScreenUtilInit(
           designSize: Size(
