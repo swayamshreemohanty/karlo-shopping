@@ -47,13 +47,15 @@ class CartRepository {
 
   Future<void> addProductToServerCart({required ProductModel product}) async {
     try {
-      final existingProductsOnCart = await fetchCartProductsFromServerCart();
       final cartProduct = CartProductModel(product: product, quantity: 1);
+
+      //Update the quantity, if the user add the product for twice
+      final existingProductsOnCart = await fetchCartProductsFromServerCart();
       if (existingProductsOnCart.isNotEmpty) {
         for (var elements in existingProductsOnCart) {
           if (elements.product.productId == product.productId) {
-            cartProduct.quantity += cartProduct.quantity + 1;
-            return;
+            cartProduct.quantity = elements.quantity + 1;
+            break;
           }
         }
       }
