@@ -13,24 +13,28 @@ class MyOrderWidget extends StatelessWidget {
     required this.cartproductsummary,
   }) : super(key: key);
 
-  _titleTextStyle() => TextStyle(
-        fontSize: 15.sp,
+  _titleTextStyle() => GoogleFonts.poppins(
+          textStyle: TextStyle(
         fontWeight: FontWeight.bold,
-      );
+        fontSize: 15.sp,
+      ));
 
-  _priceTextStyle() => TextStyle(
-        fontSize: 14.sp,
+  _priceTextStyle() => GoogleFonts.poppins(
+          textStyle: TextStyle(
         fontWeight: FontWeight.w300,
-      );
+        fontSize: 14.sp,
+      ));
+
   _header() => GoogleFonts.poppins(
           textStyle: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: 12.sp,
       ));
-  _titleContentTextStyle() => TextStyle(
-        fontSize: 13.sp,
+  _titleContentTextStyle() => GoogleFonts.poppins(
+          textStyle: TextStyle(
         fontWeight: FontWeight.bold,
-      );
+        fontSize: 13.sp,
+      ));
   @override
   Widget build(BuildContext context) {
     return Padding(
