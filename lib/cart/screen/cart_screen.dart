@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/cart/logic/cart_management/cart_management_cubit.dart';
+import 'package:shopping_app/cart/logic/checkout/checkout_cubit.dart';
 import 'package:shopping_app/cart/widget/cart_item_widget.dart';
 import 'package:shopping_app/utility/loading_indicator.dart';
 
@@ -103,17 +104,37 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                 ),
                               ),
-                              onPressed: () async {},
+                              onPressed: () async {
+                                context.read<CheckoutCubit>().checkOut(
+                                      context,
+                                      cartProducts: state.cartProducts,
+                                      cartTotalPrice: state.cartTotalPrice,
+                                    );
+                              },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 40.w,
                                   vertical: 15.h,
                                 ),
-                                child: Text(
-                                  "Checkout",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                  ),
+                                child:
+                                    BlocBuilder<CheckoutCubit, CheckoutState>(
+                                  builder: (context, state) {
+                                    if (state is CheckoutLoading) {
+                                      return SizedBox(
+                                        height: 20.h,
+                                        child: const LoadingIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      );
+                                    } else {
+                                      return Text(
+                                        "Checkout",
+                                        style: TextStyle(
+                                          fontSize: 16.sp,
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                             ),
