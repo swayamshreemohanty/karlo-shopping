@@ -143,13 +143,20 @@ class _ProductManageDialogState extends State<ProductManageDialog> {
               ),
               SizedBox(height: 20.h),
               ElevatedButton(
+                style: ButtonStyle(
+                    overlayColor:
+                        MaterialStateProperty.all(Colors.transparent)),
                 onPressed: _trySubmit,
                 child:
                     BlocBuilder<ProductmanagementBloc, ProductmanagementState>(
                   builder: (context, state) {
                     if (state is ProductActionLoading) {
-                      return const LoadingIndicator(
-                        color: Colors.white,
+                      return SizedBox(
+                        width: 30.w,
+                        height: 30.h,
+                        child: const LoadingIndicator(
+                          color: Colors.black,
+                        ),
                       );
                     } else {
                       return Text(
