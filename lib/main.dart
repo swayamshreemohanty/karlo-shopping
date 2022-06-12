@@ -8,6 +8,7 @@ import 'package:shopping_app/authentication/repository/google_auth_repository.da
 import 'package:shopping_app/authentication/screen/sign_in_screen.dart';
 import 'package:shopping_app/config/routes/application_page_routes.dart';
 import 'package:shopping_app/firebase_options.dart';
+import 'package:shopping_app/home/screens/home_screen.dart';
 import 'package:shopping_app/utility/loading_screen.dart';
 
 Future<void> main() async {
@@ -58,7 +59,7 @@ class _MyAppState extends State<MyApp> {
               WidgetsBinding.instance.window.devicePixelRatio,
         ),
         builder: (_, child) => MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Karlo Shopping',
           theme: ThemeData(
             primarySwatch: Colors.amber,
           ),
@@ -68,10 +69,9 @@ class _MyAppState extends State<MyApp> {
               if (state is AuthenticationUninitialized) {
                 return const LoadingScreen();
               } else if (state is AuthenticationAuthenticated) {
-                return Container();
+                return const HomeScreen();
               } else if (state is AuthenticationUnauthenticated) {
-                return SignInScreen();
-                // return BottomLandingScreen();
+                return const SignInScreen();
               } else {
                 return const LoadingScreen();
               }
