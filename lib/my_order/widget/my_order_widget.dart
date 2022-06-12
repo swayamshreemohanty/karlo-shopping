@@ -25,7 +25,7 @@ class MyOrderWidget extends StatelessWidget {
   _header() => GoogleFonts.poppins(
           textStyle: TextStyle(
         fontWeight: FontWeight.w400,
-        fontSize: 11.sp,
+        fontSize: 12.sp,
       ));
   _titleContentTextStyle() => TextStyle(
         fontSize: 13.sp,
@@ -91,7 +91,7 @@ class MyOrderWidget extends StatelessWidget {
                   children: [
                     SizedBox(
                         height: 80.h,
-                        width: 100.w,
+                        width: 120.w,
                         child: ProductImage(
                           product: cartproductsummary
                               .cartProductsList[index].product,
