@@ -63,6 +63,8 @@ class _ProductManageDialogState extends State<ProductManageDialog> {
             .read<ProductmanagementBloc>()
             .add(EditProduct(product: product, context: context));
       } else {
+        product.createdAt = DateTime
+            .now(); //Assign the time, when the user click the submit button.(only for newly added product)
         context
             .read<ProductmanagementBloc>()
             .add(AddProduct(product: product, context: context));
