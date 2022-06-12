@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "222666104358",
+    "project_id": "karlo-shopping",
+    "storage_bucket": "karlo-shopping.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222666104358:android:65b41c7d1f3391d7ae50e7",
+        "android_client_info": {
+          "package_name": "com.example.shopping_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222666104358-v7clbri5atkvjg377p5isq2qhd1a2uup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa7nYknSZPYAZduy_K0_CD2P9n2Zw5Pp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222666104358-v7clbri5atkvjg377p5isq2qhd1a2uup.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
