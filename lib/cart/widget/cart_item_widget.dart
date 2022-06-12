@@ -41,8 +41,11 @@ class CartItemWidget extends StatelessWidget {
                     SizedBox(
                         height: 100.h,
                         width: 140.w,
-                        child: ProductImage(
-                          product: cartproduct.product,
+                        child: Hero(
+                          tag: cartproduct.product.productImageUrl,
+                          child: ProductImage(
+                            product: cartproduct.product,
+                          ),
                         )),
                     SizedBox(width: 5.w),
                     Padding(
