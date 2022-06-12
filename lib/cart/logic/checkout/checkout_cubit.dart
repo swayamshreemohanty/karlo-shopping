@@ -30,12 +30,12 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         ),
       );
       for (var cartproduct in cartProducts) {
-        CartRepository()
+        await CartRepository()
             .deleteProductsFromServerCart(product: cartproduct.product);
       }
       emit(CheckoutCompleted());
       await cartManagementCubit.fetchProductsofServerCart(context: context);
-      ShowSnackBar.showSnackBar(context, 'successful payment');
+      ShowSnackBar.showSnackBar(context, 'Payment successful.');
       //Close the Cart Screen
       Navigator.pop(context);
     } catch (e) {
