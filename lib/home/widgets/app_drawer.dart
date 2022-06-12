@@ -18,7 +18,7 @@ class AppDrawer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(color: Colors.indigo),
+            decoration: const BoxDecoration(color: Colors.white),
             currentAccountPicture: CircleAvatar(
               backgroundImage: NetworkImage('${userDetails.photoURL}'),
             ),
@@ -41,20 +41,20 @@ class AppDrawer extends StatelessWidget {
                     title: const Text("Are you sure!"),
                     content: const Text("You are about to logout!"),
                     actions: [
-                      ElevatedButton(
+                      DialogActionButton(
+                        buttonName: 'No',
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const Text('No'),
                       ),
-                      ElevatedButton(
+                      DialogActionButton(
+                        buttonName: 'Yes',
                         onPressed: () {
                           Navigator.of(context).pop();
                           context
                               .read<GoogleAuthenticationBloc>()
                               .add(LoggedOut(context: context));
                         },
-                        child: const Text('Yes'),
                       ),
                     ],
                   ),
@@ -64,6 +64,28 @@ class AppDrawer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DialogActionButton extends StatelessWidget {
+  final String buttonName;
+  final void Function()? onPressed;
+  const DialogActionButton({
+    Key? key,
+    required this.buttonName,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.white),
+        foregroundColor: MaterialStateProperty.all(Colors.black),
+      ),
+      onPressed: onPressed,
+      child: Text(buttonName),
     );
   }
 }
