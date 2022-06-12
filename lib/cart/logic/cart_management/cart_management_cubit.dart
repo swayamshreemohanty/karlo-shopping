@@ -23,13 +23,17 @@ class CartManagementCubit extends Cubit<CartManagementState> {
       emit(AddToCartLoading());
       _cartData = await _cartRepository.fetchCartProductsFromServerCart();
       cartItem = _cartData.length;
-      emit(CartUpdated(
-          cartProducts: _cartData,
-          cartTotalPrice: calculateTotalAmountofCart(_cartData)));
+      emit(
+        CartUpdated(
+            cartProducts: _cartData,
+            cartTotalPrice: calculateTotalAmountofCart(_cartData)),
+      );
     } catch (e) {
-      emit(CartUpdated(
-          cartProducts: _cartData,
-          cartTotalPrice: calculateTotalAmountofCart(_cartData)));
+      emit(
+        CartUpdated(
+            cartProducts: _cartData,
+            cartTotalPrice: calculateTotalAmountofCart(_cartData)),
+      );
     }
   }
 
