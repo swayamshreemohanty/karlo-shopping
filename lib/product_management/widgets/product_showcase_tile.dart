@@ -110,7 +110,7 @@ class ProductImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(5.r),
       ),
       child: CachedNetworkImage(
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.scaleDown,
           imageUrl: product.productImageUrl,
           progressIndicatorBuilder: (context, url, downloadProgress) => Center(
                 child: CircularProgressIndicator(
