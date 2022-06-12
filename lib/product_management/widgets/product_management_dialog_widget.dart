@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping_app/model/product_model.dart';
+import 'package:shopping_app/product_management/logic/product_management/productmanagement_bloc.dart';
+import 'package:shopping_app/utility/loading_indicator.dart';
 
 class ProductManageDialog extends StatefulWidget {
-  final ProductModel? product;
+  final ProductModel? editableProduct;
   final bool editproduct;
   const ProductManageDialog({
     Key? key,
-    this.product,
+    this.editableProduct,
     this.editproduct = false,
   }) : super(key: key);
 
@@ -17,35 +20,24 @@ class ProductManageDialog extends StatefulWidget {
 
 class _ProductManageDialogState extends State<ProductManageDialog> {
   final _formKey = GlobalKey<FormState>();
-
+  late ProductModel product;
   final _productIdTextController = TextEditingController();
   final _productNameTextController = TextEditingController();
   final _productImageUrlTextController = TextEditingController();
   final _productPriceTextController = TextEditingController();
   final _productDescriptionTextController = TextEditingController();
 
-  Future<void> _trySubmit() async {
-    final isValid = _formKey.currentState!.validate();
-    if (isValid) {
-      _formKey.currentState!.save();
-      //close the soft keyboard after submit button click.
-      FocusScope.of(context).unfocus();
-      if (widget.editproduct) {
-      } else {}
-      Navigator.of(context).pop();
-    }
-    return;
-  }
-
   @override
   void initState() {
-    if (widget.product != null) {
-      _productIdTextController.text = widget.product!.productId ?? '';
-      _productNameTextController.text = widget.product!.productName;
-      _productImageUrlTextController.text = widget.product!.productImageUrl;
-      _productPriceTextController.text = widget.product!.productPrice;
-      _productDescriptionTextController.text =
-          widget.product!.productDescription;
+    if (widget.editableProduct != null) {
+      product = widget.editableProduct!;
+      _productIdTextController.text = product.productId ?? '';
+      _productNameTextController.text = product.productName;
+      _productImageUrlTextController.text = product.productImageUrl;
+      _productPriceTextController.text = product.productPrice;
+      _productDescriptionTextController.text = product.productDescription;
+    } else {
+      product = ProductModel.blankInitialize();
     }
     super.initState();
   }
@@ -58,6 +50,25 @@ class _ProductManageDialogState extends State<ProductManageDialog> {
     _productPriceTextController.clear();
     _productDescriptionTextController.clear();
     super.dispose();
+  }
+
+  Future<void> _trySubmit() async {
+    final isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      _formKey.currentState!.save();
+      //close the soft keyboard after submit button click.
+      FocusScope.of(context).unfocus();
+      if (widget.editproduct) {
+        context
+            .read<ProductmanagementBloc>()
+            .add(EditProduct(product: product, context: context));
+      } else {
+        context
+            .read<ProductmanagementBloc>()
+            .add(AddProduct(product: product, context: context));
+      }
+    }
+    return;
   }
 
   @override
@@ -75,7 +86,7 @@ class _ProductManageDialogState extends State<ProductManageDialog> {
                 productTextController: _productNameTextController,
                 hintText: "Product Name",
                 onChanged: (value) {
-                  _productNameTextController.text = value.trim();
+                  product.productName = value.trim();
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -89,7 +100,7 @@ class _ProductManageDialogState extends State<ProductManageDialog> {
                 keyboardType: TextInputType.url,
                 hintText: "Product Image URL",
                 onChanged: (value) {
-                  _productImageUrlTextController.text = value.trim();
+                  product.productImageUrl = value.trim();
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -103,7 +114,7 @@ class _ProductManageDialogState extends State<ProductManageDialog> {
                 productTextController: _productPriceTextController,
                 hintText: "Product price",
                 onChanged: (value) {
-                  _productPriceTextController.text = value.trim();
+                  product.productPrice = value.trim();
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -119,7 +130,7 @@ class _ProductManageDialogState extends State<ProductManageDialog> {
                 productTextController: _productDescriptionTextController,
                 hintText: "Product description...",
                 onChanged: (value) {
-                  _productDescriptionTextController.text = value.trim();
+                  product.productDescription = value.trim();
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -131,11 +142,22 @@ class _ProductManageDialogState extends State<ProductManageDialog> {
               SizedBox(height: 20.h),
               ElevatedButton(
                 onPressed: _trySubmit,
-                child: Text(
-                  "Submit",
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                  ),
+                child:
+                    BlocBuilder<ProductmanagementBloc, ProductmanagementState>(
+                  builder: (context, state) {
+                    if (state is ProductActionLoading) {
+                      return const LoadingIndicator(
+                        color: Colors.white,
+                      );
+                    } else {
+                      return Text(
+                        "Submit",
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ],
