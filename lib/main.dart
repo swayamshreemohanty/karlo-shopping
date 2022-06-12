@@ -8,6 +8,7 @@ import 'package:shopping_app/authentication/logic/login/google_login_bloc.dart';
 import 'package:shopping_app/authentication/repository/google_auth_repository.dart';
 import 'package:shopping_app/authentication/screen/sign_in_screen.dart';
 import 'package:shopping_app/cart/logic/cart_management/cart_management_cubit.dart';
+import 'package:shopping_app/cart/logic/checkout/checkout_cubit.dart';
 import 'package:shopping_app/config/routes/application_page_routes.dart';
 import 'package:shopping_app/firebase_options.dart';
 import 'package:shopping_app/home/repository/user_role.dart';
@@ -64,6 +65,11 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<CartManagementCubit>(
             create: (context) => CartManagementCubit(),
+          ),
+          BlocProvider<CheckoutCubit>(
+            create: (context) => CheckoutCubit(
+              cartManagementCubit: context.read<CartManagementCubit>(),
+            ),
           ),
         ],
         child: ScreenUtilInit(
