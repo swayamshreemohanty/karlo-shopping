@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:shopping_app/home/widgets/app_bar_header.dart';
 import 'package:shopping_app/model/product_model.dart';
 import 'package:shopping_app/product_management/logic/product_management/productmanagement_bloc.dart';
 import 'package:shopping_app/product_management/widgets/product_management_dialog_widget.dart';
@@ -21,8 +22,10 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
+        backgroundColor: Colors.white,
+        elevation: 0,
         centerTitle: true,
+        title: const AppBarHeader(title: "Products"),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
@@ -48,7 +51,7 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
               return ListView.builder(
                 shrinkWrap: true,
                 itemCount: logs.length,
-                itemBuilder: (context, index) =>
+                itemBuilder: (_, index) =>
                     AnimationConfiguration.staggeredList(
                   position: index,
                   duration: const Duration(milliseconds: 375),
@@ -65,7 +68,7 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                                 onPressed: () {
                                   showDialog(
                                     context: context,
-                                    builder: (ctx) =>  ProductManageDialog(
+                                    builder: (ctx) => ProductManageDialog(
                                       editableProduct: logs[index],
                                       editproduct: true,
                                     ),
