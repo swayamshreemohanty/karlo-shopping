@@ -6,6 +6,7 @@ import 'package:shopping_app/cart/logic/cart_management/cart_management_cubit.da
 import 'package:shopping_app/cart/screen/cart_screen.dart';
 import 'package:shopping_app/cart/widget/shopping_cart_badge.dart';
 import 'package:shopping_app/home/repository/user_role.dart';
+import 'package:shopping_app/home/widgets/app_bar_header.dart';
 import 'package:shopping_app/home/widgets/app_drawer.dart';
 import 'package:shopping_app/model/product_model.dart';
 import 'package:shopping_app/product_management/logic/product_management/productmanagement_bloc.dart';
@@ -38,7 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text("Karlo Shopping"),
+          backgroundColor: Colors.white,
+          title: const AppBarHeader(title: "Karlo Shopping"),
           centerTitle: true,
           elevation: 0,
           actions: [
