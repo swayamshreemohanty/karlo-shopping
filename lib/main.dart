@@ -11,6 +11,7 @@ import 'package:shopping_app/config/routes/application_page_routes.dart';
 import 'package:shopping_app/firebase_options.dart';
 import 'package:shopping_app/home/repository/user_role.dart';
 import 'package:shopping_app/home/screens/home_screen.dart';
+import 'package:shopping_app/product_management/logic/product_management/productmanagement_bloc.dart';
 import 'package:shopping_app/utility/loading_screen.dart';
 
 Future<void> main() async {
@@ -56,6 +57,9 @@ class _MyAppState extends State<MyApp> {
                   BlocProvider.of<GoogleAuthenticationBloc>(context),
               googleAuthenticationRepository: GoogleAuthenticationRepository(),
             ),
+          ),
+          BlocProvider<ProductmanagementBloc>(
+            create: (context) => ProductmanagementBloc(),
           ),
         ],
         child: ScreenUtilInit(
