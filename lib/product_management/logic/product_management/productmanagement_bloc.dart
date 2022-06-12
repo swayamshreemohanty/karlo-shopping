@@ -12,7 +12,6 @@ part 'productmanagement_state.dart';
 class ProductmanagementBloc
     extends Bloc<ProductmanagementEvent, ProductmanagementState> {
   ProductmanagementBloc() : super(ProductmanagementInitial()) {
-    final productManagementRepository = ProductManagementRepository();
     void closeTheDialogBox(BuildContext context) {
       Navigator.pop(context);
     }
@@ -77,5 +76,10 @@ class ProductmanagementBloc
         }
       }
     });
+  }
+  final productManagementRepository = ProductManagementRepository();
+
+  Stream<List<ProductModel?>> fetchProducts() {
+    return productManagementRepository.streamProductsLog();
   }
 }
