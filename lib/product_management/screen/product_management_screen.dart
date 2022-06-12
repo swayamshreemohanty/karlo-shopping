@@ -53,7 +53,43 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                   position: index,
                   duration: const Duration(milliseconds: 375),
                   child: ScaleAnimation(
-                    child: ProductShowCaseTile(product: logs[index]!),
+                    child: Card(
+                      child: Column(
+                        children: [
+                          ProductShowCaseTile(product: logs[index]!),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                tooltip: 'Edit Product',
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (ctx) =>  ProductManageDialog(
+                                      editableProduct: logs[index],
+                                      editproduct: true,
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.edit),
+                              ),
+                              IconButton(
+                                tooltip: 'Delete Product',
+                                onPressed: () {
+                                  context.read<ProductmanagementBloc>().add(
+                                        DeleteProduct(
+                                          product: logs[index]!,
+                                          context: context,
+                                        ),
+                                      );
+                                },
+                                icon: const Icon(Icons.delete),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               );
