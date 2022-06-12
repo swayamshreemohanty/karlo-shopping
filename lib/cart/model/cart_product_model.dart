@@ -26,7 +26,7 @@ class CartProductSummary {
     return CartProductSummary(
       orderId: map['orderId'] != null ? map['orderId'] as String : null,
       cartProductsList: List<CartProductModel>.from(
-        (map['cartProductsList'] as List<int>).map<CartProductModel>(
+        (map['cartProductsList'] as List<dynamic>).map<CartProductModel>(
           (x) => CartProductModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
