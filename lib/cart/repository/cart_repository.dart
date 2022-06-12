@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shopping_app/cart/model/cart_item_model.dart';
+import 'package:shopping_app/cart/model/cart_product_model.dart';
 import 'package:shopping_app/model/product_model.dart';
 import 'package:shopping_app/utility/firebase_current_user_data.dart';
 
