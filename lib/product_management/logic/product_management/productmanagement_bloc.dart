@@ -66,13 +66,11 @@ class ProductmanagementBloc
             event.context,
             "${event.product.productName} is deleted.",
           );
-          closeTheDialogBox(event.context);
         } catch (e) {
           ShowSnackBar.showSnackBar(
             event.context,
             "Unable to delete the product.",
           );
-          closeTheDialogBox(event.context);
         }
       }
     });
