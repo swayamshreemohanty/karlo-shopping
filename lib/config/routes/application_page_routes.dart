@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/cart/screen/cart_screen.dart';
+import 'package:shopping_app/my_order/screen/my_order_screen.dart';
 import 'package:shopping_app/product_management/screen/product_management_screen.dart';
 import 'package:shopping_app/utility/loading_indicator.dart';
 
@@ -20,6 +21,12 @@ class ScreenRouter {
         return MaterialPageRoute(
           settings: RouteSettings(arguments: routeSettings.arguments),
           builder: (_) => const CartScreen(),
+        );
+      //
+      case MyOrderScreen.routeName:
+        return MaterialPageRoute(
+          settings: RouteSettings(arguments: routeSettings.arguments),
+          builder: (_) => const MyOrderScreen(),
         );
 
       default:
