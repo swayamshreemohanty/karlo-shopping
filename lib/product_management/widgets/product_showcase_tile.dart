@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app/home/screens/product_details_screen.dart';
 import 'package:shopping_app/model/product_model.dart';
 
 class ProductShowCaseTile extends StatelessWidget {
@@ -16,7 +17,13 @@ class ProductShowCaseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (() async {}),
+      onTap: (() async {
+        Navigator.pushNamed(
+          context,
+          ProductDetailsScreen.routeName,
+          arguments: product,
+        );
+      }),
       child: Container(
         decoration: BoxDecoration(border: Border.all()),
         child: Padding(
@@ -26,7 +33,10 @@ class ProductShowCaseTile extends StatelessWidget {
           ),
           child: Column(
             children: [
-              ProductImage(product: product),
+              Hero(
+                tag: product.productImageUrl,
+                child: ProductImage(product: product),
+              ),
               SizedBox(height: 10.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
