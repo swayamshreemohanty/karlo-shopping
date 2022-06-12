@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/cart/screen/cart_screen.dart';
 import 'package:shopping_app/product_management/screen/product_management_screen.dart';
 import 'package:shopping_app/utility/loading_indicator.dart';
 
@@ -15,6 +16,11 @@ class ScreenRouter {
           builder: (_) => const ProductManagementScreen(),
         );
       //
+      case CartScreen.routeName:
+        return MaterialPageRoute(
+          settings: RouteSettings(arguments: routeSettings.arguments),
+          builder: (_) => const CartScreen(),
+        );
 
       default:
         return errorRoute();
