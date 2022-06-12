@@ -1,43 +1,35 @@
+import 'package:shopping_app/model/product_model.dart';
+
 class CartProductModel {
   String? orderId;
-  String productId;
-  String productImageUrl;
-  String productName;
-  String productPrice;
-  String productDescription;
-  DateTime orderCreatedAt;
+  int quantity;
+  ProductModel product;
+  DateTime? orderCreatedAt;
   CartProductModel({
     this.orderId,
-    required this.productId,
-    required this.productImageUrl,
-    required this.productName,
-    required this.productPrice,
-    required this.productDescription,
-    required this.orderCreatedAt,
+    required this.product,
+    required this.quantity,
+    this.orderCreatedAt,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'orderId': orderId,
-      'productId': productId,
-      'productImageUrl': productImageUrl,
-      'productName': productName,
-      'productPrice': productPrice,
-      'productDescription': productDescription,
-      'orderCreatedAt': orderCreatedAt.millisecondsSinceEpoch,
+      'quantity': quantity,
+      'product': product.toMap(),
+      'orderCreatedAt': orderCreatedAt?.millisecondsSinceEpoch,
     };
   }
 
   factory CartProductModel.fromMap(Map<String, dynamic> map) {
     return CartProductModel(
       orderId: map['orderId'] != null ? map['orderId'] as String : null,
-      productId: (map['productId'] ?? '') as String,
-      productImageUrl: (map['productImageUrl'] ?? '') as String,
-      productName: (map['productName'] ?? '') as String,
-      productPrice: (map['productPrice'] ?? '') as String,
-      productDescription: (map['productDescription'] ?? '') as String,
-      orderCreatedAt: DateTime.fromMillisecondsSinceEpoch(
-          (map['orderCreatedAt'] ?? 0) as int),
+      quantity: (map['quantity'] ?? 1) as int,
+      product: ProductModel.fromMap(map['product'] as Map<String, dynamic>),
+      orderCreatedAt: map['orderCreatedAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(
+              (map['orderCreatedAt'] ?? 0) as int)
+          : null,
     );
   }
 }
