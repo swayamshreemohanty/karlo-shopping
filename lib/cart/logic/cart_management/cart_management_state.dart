@@ -13,8 +13,10 @@ class AddToCartLoading extends CartManagementState {}
 
 class CartUpdated extends CartManagementState {
   final List<CartProductModel> cartProducts;
+  final String cartTotalPrice;
   const CartUpdated({
     required this.cartProducts,
+    required this.cartTotalPrice,
   });
   @override
   List<Object> get props => [cartProducts];
