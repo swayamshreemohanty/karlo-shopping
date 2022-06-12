@@ -5,7 +5,7 @@ import 'package:shopping_app/utility/firebase_path.dart';
 class UserRoleRepository {
   String _userRole = 'user';
 
-  bool get isAdmin => _userRole != 'user';
+  bool get isAdmin => _userRole == 'admin';
 
   Future<void> fetchuserRole() async {
     _userRole = await FirebaseFirestore.instance
