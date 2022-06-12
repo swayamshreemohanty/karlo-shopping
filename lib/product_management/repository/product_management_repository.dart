@@ -8,7 +8,9 @@ class ProductManagementRepository {
     try {
       final productDocRef = _allProductsPath.doc();
       productModel.productId = productDocRef.id;
-      await _allProductsPath.doc(productModel.productId).set(productModel.toMap());
+      await _allProductsPath
+          .doc(productModel.productId)
+          .set(productModel.toMap());
       return;
     } catch (e) {
       rethrow;
@@ -35,5 +37,16 @@ class ProductManagementRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Stream<List<ProductModel?>> streamProductsLog() {
+    return _allProductsPath
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map(
+          (snaps) => snaps.docs
+              .map((doc) => ProductModel.fromMap(doc.data()))
+              .toList(),
+        );
   }
 }
