@@ -2,15 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping_app/cart/model/cart_product_model.dart';
 import 'package:shopping_app/model/product_model.dart';
 import 'package:shopping_app/utility/firebase_current_user_data.dart';
+import 'package:shopping_app/utility/firebase_path.dart';
 
 class CartRepository {
   final _firebaseFirestore = FirebaseFirestore.instance;
 
   Future<bool> isProductAlreadyInCart({required String productId}) async {
     final existingProduct = await _firebaseFirestore
-        .collection('user')
+        .collection(FirebasePath.user)
         .doc(FirebaseCurrentUserData().userDetails!.uid)
-        .collection('cart')
+        .collection(FirebasePath.cart)
         .doc(productId)
         .get();
 
@@ -24,9 +25,9 @@ class CartRepository {
   Future<List<CartProductModel>> fetchCartProductsFromServerCart() async {
     try {
       return await _firebaseFirestore
-          .collection('user')
+          .collection(FirebasePath.user)
           .doc(FirebaseCurrentUserData().userDetails!.uid)
-          .collection('cart')
+          .collection(FirebasePath.cart)
           .get()
           .then(
             (response) => response.docs
@@ -50,9 +51,9 @@ class CartRepository {
         }
       }
       await _firebaseFirestore
-          .collection('user')
+          .collection(FirebasePath.user)
           .doc(FirebaseCurrentUserData().userDetails!.uid)
-          .collection('cart')
+          .collection(FirebasePath.cart)
           .doc(product.productId)
           .delete();
     } catch (error) {
@@ -65,9 +66,9 @@ class CartRepository {
       final cartProduct = CartProductModel(product: product, quantity: 1);
 
       await _firebaseFirestore
-          .collection('user')
+          .collection(FirebasePath.user)
           .doc(FirebaseCurrentUserData().userDetails!.uid)
-          .collection('cart')
+          .collection(FirebasePath.cart)
           .doc(cartProduct.product.productId)
           .set(cartProduct.toMap());
     } catch (error) {
