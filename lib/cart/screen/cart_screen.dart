@@ -97,6 +97,9 @@ class _CartScreenState extends State<CartScreen> {
                                 foregroundColor: MaterialStateProperty.all(
                                   Colors.white,
                                 ),
+                                overlayColor: MaterialStateProperty.all(
+                                  Colors.transparent,
+                                ),
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
@@ -122,6 +125,7 @@ class _CartScreenState extends State<CartScreen> {
                                     if (state is CheckoutLoading) {
                                       return SizedBox(
                                         height: 20.h,
+                                        width: 20.w,
                                         child: const LoadingIndicator(
                                           color: Colors.white,
                                         ),
