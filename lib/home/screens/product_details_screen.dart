@@ -23,31 +23,34 @@ class ProductDetailsScreen extends StatelessWidget {
         centerTitle: true,
         title: const AppBarHeader(title: "Details"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            SizedBox(
-              width: 450.w,
-              height: 250.h,
-              child: Hero(
-                tag: productModel.productImageUrl,
-                child: ProductImage(product: productModel),
+      body: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              SizedBox(
+                width: 450.w,
+                height: 250.h,
+                child: Hero(
+                  tag: productModel.productImageUrl,
+                  child: ProductImage(product: productModel),
+                ),
               ),
-            ),
-            ProductDetails(
-              header: "Product Name: ",
-              content: productModel.productName,
-            ),
-            ProductDetails(
-              header: "Product Price: ",
-              content: productModel.productPrice,
-            ),
-            ProductDetails(
-              header: "Product Description: ",
-              content: productModel.productDescription,
-            ),
-          ],
+              ProductDetails(
+                header: "Product Name: ",
+                content: productModel.productName,
+              ),
+              ProductDetails(
+                header: "Product Price: ",
+                content: productModel.productPrice,
+              ),
+              ProductDetails(
+                header: "Product Description: ",
+                content: productModel.productDescription,
+              ),
+            ],
+          ),
         ),
       ),
     );
