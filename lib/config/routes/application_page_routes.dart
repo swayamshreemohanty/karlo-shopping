@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/product_management/screen/product_management_screen.dart';
 import 'package:shopping_app/utility/loading_indicator.dart';
 
 class ScreenRouter {
@@ -8,11 +9,11 @@ class ScreenRouter {
     String? routeName = routeSettings.name;
 
     switch (routeName) {
-      // case BottomLandingScreen.routeName:
-      //   return MaterialPageRoute(
-      //     settings: RouteSettings(arguments: _routeSettings.arguments),
-      //     builder: (_) => const BottomLandingScreen(),
-      //   );
+      case ProductManagementScreen.routeName:
+        return MaterialPageRoute(
+          settings: RouteSettings(arguments: routeSettings.arguments),
+          builder: (_) => const ProductManagementScreen(),
+        );
       //
 
       default:
