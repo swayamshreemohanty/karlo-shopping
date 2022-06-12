@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/authentication/logic/authentication/google_authentication_bloc.dart';
 import 'package:shopping_app/home/repository/user_role.dart';
+import 'package:shopping_app/product_management/screen/product_management_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   final User userDetails;
@@ -35,8 +36,14 @@ class AppDrawer extends StatelessWidget {
                   elevation: 2,
                   child: ListTile(
                     leading: const Icon(Icons.add_box),
-                    title: const Text('Add Item'),
-                    onTap: () {},
+                    title: const Text('Add Product'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(
+                        context,
+                        ProductManagementScreen.routeName,
+                      );
+                    },
                   ),
                 )
               : const SizedBox.shrink(),
