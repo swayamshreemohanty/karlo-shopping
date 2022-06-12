@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app/authentication/widget/google_sign_in_button.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -13,20 +15,27 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(83, 139, 104, 1),
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const Spacer(),
               Image.asset(
                 'assets/splash_screen_logo.png',
-                height: 300,
+                height: 100.h,
               ),
-              SizedBox(height: deviceSize.height * 0.1),
-              const GoogleSignInButton()
+              SizedBox(height: 40.h),
+              Text(
+                "Karlo Shopping",
+                style: GoogleFonts.abhayaLibre(
+                  textStyle: TextStyle(fontSize: 40.sp),
+                ),
+              ),
+              const Spacer(),
+              const GoogleSignInButton(),
+              SizedBox(height: 20.h),
             ],
           ),
         ),
