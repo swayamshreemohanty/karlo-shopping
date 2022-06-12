@@ -46,21 +46,33 @@ class CartManagementCubit extends Cubit<CartManagementState> {
     required BuildContext context,
   }) async {
     try {
+      bool allowUndo = true;
       //Cart item assign to 1 because to break the cartItem !=0 condition and
       //show the loading spinner on Bottom screen nav bar Shopping bag.
       cartItem = 1;
       emit(AddToCartLoading());
       await _cartRepository.addProductToServerCart(product: product);
       await fetchProductsofServerCart(context: context);
-      ShowSnackBar.showSnackBar(context, "Product added to cart.",
-          action: SnackBarAction(
-              label: 'Undo',
-              onPressed: () async {
-                await deleteProductfromServerCart(
-                  product: product,
-                  context: context,
-                );
-              }));
+      for (var element in _cartData) {
+        if (element.product.productId == product.productId &&
+            element.quantity > 1) {
+          allowUndo = false;
+        }
+      }
+      ShowSnackBar.showSnackBar(
+        context,
+        "Product added to cart.",
+        action: allowUndo
+            ? SnackBarAction(
+                label: 'Undo',
+                onPressed: () async {
+                  await deleteProductfromServerCart(
+                    product: product,
+                    context: context,
+                  );
+                })
+            : null,
+      );
     } catch (e) {
       ShowSnackBar.showSnackBar(context, "Unable to add the product to cart.");
     }
