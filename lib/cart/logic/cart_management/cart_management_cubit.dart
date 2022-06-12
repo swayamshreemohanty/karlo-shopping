@@ -19,7 +19,6 @@ class CartManagementCubit extends Cubit<CartManagementState> {
       {required BuildContext context}) async {
     try {
       emit(AddToCartLoading());
-
       _cartData = await _cartRepository.fetchCartProductsFromServerCart();
       cartItem = _cartData.length;
       emit(CartUpdated(cartProducts: _cartData));
@@ -34,7 +33,7 @@ class CartManagementCubit extends Cubit<CartManagementState> {
   }) async {
     try {
       emit(AddToCartLoading());
-      await _cartRepository.deleteProductsFromServerCart(productModel: product);
+      await _cartRepository.deleteProductsFromServerCart(product: product);
 
       await fetchProductsofServerCart(context: context);
     } catch (e) {
@@ -51,9 +50,17 @@ class CartManagementCubit extends Cubit<CartManagementState> {
       //show the loading spinner on Bottom screen nav bar Shopping bag.
       cartItem = 1;
       emit(AddToCartLoading());
-      await _cartRepository.addProductToServerCart(productModel: product);
+      await _cartRepository.addProductToServerCart(product: product);
       await fetchProductsofServerCart(context: context);
-      ShowSnackBar.showSnackBar(context, "Product added to cart.");
+      ShowSnackBar.showSnackBar(context, "Product added to cart.",
+          action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () async {
+                await deleteProductfromServerCart(
+                  product: product,
+                  context: context,
+                );
+              }));
     } catch (e) {
       ShowSnackBar.showSnackBar(context, "Unable to add the product to cart.");
     }

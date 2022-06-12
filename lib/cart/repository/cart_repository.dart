@@ -24,28 +24,45 @@ class CartRepository {
   }
 
   Future<void> deleteProductsFromServerCart(
-      {required ProductModel productModel}) async {
+      {required ProductModel product}) async {
     try {
+      final existingProductsOnCart = await fetchCartProductsFromServerCart();
+      if (existingProductsOnCart.isNotEmpty) {
+        for (var cartproduct in existingProductsOnCart) {
+          if (cartproduct.product.productId == product.productId) {
+            cartproduct.quantity += cartproduct.quantity + 1;
+          }
+        }
+      }
       await _firebaseFirestore
           .collection('user')
           .doc(FirebaseCurrentUserData().userDetails!.uid)
           .collection('cart')
-          .doc(productModel.productId)
+          .doc(product.productId)
           .delete();
     } catch (error) {
       rethrow;
     }
   }
 
-  Future<void> addProductToServerCart(
-      {required ProductModel productModel}) async {
+  Future<void> addProductToServerCart({required ProductModel product}) async {
     try {
+      final existingProductsOnCart = await fetchCartProductsFromServerCart();
+      final cartProduct = CartProductModel(product: product, quantity: 1);
+      if (existingProductsOnCart.isNotEmpty) {
+        for (var elements in existingProductsOnCart) {
+          if (elements.product.productId == product.productId) {
+            cartProduct.quantity += cartProduct.quantity + 1;
+            return;
+          }
+        }
+      }
       await _firebaseFirestore
           .collection('user')
           .doc(FirebaseCurrentUserData().userDetails!.uid)
           .collection('cart')
-          .doc(productModel.productId)
-          .set(productModel.toMap());
+          .doc(cartProduct.product.productId)
+          .set(cartProduct.toMap());
     } catch (error) {
       rethrow;
     }
