@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     iconSize: 30.sp,
                     onPressed: () {},
                     icon: const Icon(
-                      Icons.shopping_bag,
+                      Icons.shopping_cart_outlined,
                     ),
                   ),
                   BlocBuilder<CartManagementCubit, CartManagementState>(
@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         context: context,
                                       );
                                 },
-                                icon: const Icon(Icons.shopping_basket)),
+                                icon: const Icon(Icons.add_shopping_cart)),
                           )
                         ]),
                       ),
