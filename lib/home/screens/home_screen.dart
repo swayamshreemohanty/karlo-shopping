@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:shopping_app/cart/logic/cart_management/cart_management_cubit.dart';
+import 'package:shopping_app/cart/screen/cart_screen.dart';
 import 'package:shopping_app/cart/widget/shopping_cart_badge.dart';
 import 'package:shopping_app/home/repository/user_role.dart';
 import 'package:shopping_app/home/widgets/app_drawer.dart';
@@ -41,32 +42,41 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           elevation: 0,
           actions: [
-            Stack(children: [
-              IconButton(
-                iconSize: 30.sp,
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.shopping_bag,
-                ),
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: (() {
+                Navigator.pushNamed(context, CartScreen.routeName);
+              }),
+              child: AbsorbPointer(
+                child: Stack(children: [
+                  IconButton(
+                    iconSize: 30.sp,
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.shopping_bag,
+                    ),
+                  ),
+                  BlocBuilder<CartManagementCubit, CartManagementState>(
+                    builder: (context, state) {
+                      if (state is CartUpdated) {
+                        if (state.cartProducts.isEmpty) {
+                          return const Text("");
+                        } else {
+                          return _shoppingBadge;
+                        }
+                      } else if (state is AddToCartLoading &&
+                          BlocProvider.of<CartManagementCubit>(context)
+                                  .cartItem !=
+                              0) {
+                        return _shoppingBadge;
+                      } else {
+                        return const Text("");
+                      }
+                    },
+                  ),
+                ]),
               ),
-              BlocBuilder<CartManagementCubit, CartManagementState>(
-                builder: (context, state) {
-                  if (state is CartUpdated) {
-                    if (state.cartProducts.isEmpty) {
-                      return const Text("");
-                    } else {
-                      return _shoppingBadge;
-                    }
-                  } else if (state is AddToCartLoading &&
-                      BlocProvider.of<CartManagementCubit>(context).cartItem !=
-                          0) {
-                    return _shoppingBadge;
-                  } else {
-                    return const Text("");
-                  }
-                },
-              ),
-            ])
+            )
           ],
         ),
         drawer: AppDrawer(
