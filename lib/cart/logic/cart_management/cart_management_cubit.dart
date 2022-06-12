@@ -19,6 +19,7 @@ class CartManagementCubit extends Cubit<CartManagementState> {
 
   Future<void> fetchProductsofServerCart(
       {required BuildContext context}) async {
+    emit(AddToCartLoading());
     try {
       _cartData = await _cartRepository.fetchCartProductsFromServerCart();
       cartItem = _cartData.length;
@@ -61,35 +62,30 @@ class CartManagementCubit extends Cubit<CartManagementState> {
       //Cart item assign to 1 because to break the cartItem !=0 condition and
       //show the loading spinner on Bottom screen nav bar Shopping bag.
       cartItem = 1;
-      await fetchProductsofServerCart(
-        context: context,
-      ); //Fetch data to compair for existing product
-      for (var element in _cartData) {
-        //If the item is already in the cart,don't add it again.
-        if (element.product.productId == product.productId) {
-          ShowSnackBar.showSnackBar(
-            context,
-            "${product.productName} is already in the cart.",
-          );
-          return;
-        }
-      }
-      emit(AddToCartLoading());
-      await _cartRepository.addProductToServerCart(product: product);
-      await fetchProductsofServerCart(context: context); //Refresh the cart
+      final isProductAlreadyinCart = await _cartRepository
+          .isProductAlreadyInCart(productId: product.productId!);
+      if (isProductAlreadyinCart) {
+        ShowSnackBar.showSnackBar(
+          context,
+          "${product.productName} is already in the cart.",
+        );
+      } else {
+        await _cartRepository.addProductToServerCart(product: product);
+        await fetchProductsofServerCart(context: context); //Refresh the cart
 
-      ShowSnackBar.showSnackBar(
-        context,
-        "Product added to cart.",
-        action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () async {
-              await deleteProductfromServerCart(
-                product: product,
-                context: context,
-              );
-            }),
-      );
+        ShowSnackBar.showSnackBar(
+          context,
+          "Product added to cart.",
+          action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () async {
+                await deleteProductfromServerCart(
+                  product: product,
+                  context: context,
+                );
+              }),
+        );
+      }
       return;
     } catch (e) {
       ShowSnackBar.showSnackBar(context, "Unable to add the product to cart.");
