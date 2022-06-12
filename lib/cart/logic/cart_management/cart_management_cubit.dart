@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_app/cart/helper/cart_amount_calculator.dart';
 import 'package:shopping_app/cart/model/cart_product_model.dart';
 import 'package:shopping_app/cart/repository/cart_repository.dart';
 import 'package:shopping_app/model/product_model.dart';
@@ -13,6 +14,7 @@ class CartManagementCubit extends Cubit<CartManagementState> {
   CartManagementCubit() : super(AddToCartInitial());
   final _cartRepository = CartRepository();
   int cartItem = 0;
+
   List<CartProductModel> _cartData = [];
 
   Future<void> fetchProductsofServerCart(
@@ -21,9 +23,13 @@ class CartManagementCubit extends Cubit<CartManagementState> {
       emit(AddToCartLoading());
       _cartData = await _cartRepository.fetchCartProductsFromServerCart();
       cartItem = _cartData.length;
-      emit(CartUpdated(cartProducts: _cartData));
+      emit(CartUpdated(
+          cartProducts: _cartData,
+          cartTotalPrice: calculateTotalAmountofCart(_cartData)));
     } catch (e) {
-      emit(CartUpdated(cartProducts: _cartData));
+      emit(CartUpdated(
+          cartProducts: _cartData,
+          cartTotalPrice: calculateTotalAmountofCart(_cartData)));
     }
   }
 
@@ -37,7 +43,10 @@ class CartManagementCubit extends Cubit<CartManagementState> {
 
       await fetchProductsofServerCart(context: context);
     } catch (e) {
-      emit(CartUpdated(cartProducts: _cartData));
+      emit(CartUpdated(
+        cartProducts: _cartData,
+        cartTotalPrice: calculateTotalAmountofCart(_cartData),
+      ));
     }
   }
 
