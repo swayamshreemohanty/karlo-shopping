@@ -16,17 +16,21 @@ class GoogleLoginBloc extends Bloc<GoogleLoginEvent, GoogleLoginState> {
     on<GoogleLoginEvent>(
       (event, emit) async {
         if (event is LoginButtonPressed) {
-          emit(GoogleLoginLoading());
-          await googleAuthenticationRepository
-              .signInWithGoogle(context: event.context)
-              .whenComplete(
-            () {
-              {
-                emit(GoogleLoginInitial());
-                googleAuthenticationBloc.add(LoggedIn());
-              }
-            },
-          );
+          try {
+            emit(GoogleLoginLoading());
+            await googleAuthenticationRepository
+                .signInWithGoogle(context: event.context)
+                .whenComplete(
+              () {
+                {
+                  emit(GoogleLoginInitial());
+                  googleAuthenticationBloc.add(LoggedIn());
+                }
+              },
+            );
+          } catch (e) {
+            emit(GoogleLoginInitial());
+          }
         }
       },
     );
