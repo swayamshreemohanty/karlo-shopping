@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/authentication/logic/authentication/google_authentication_bloc.dart';
 import 'package:shopping_app/home/repository/user_role.dart';
+import 'package:shopping_app/my_order/screen/my_order_screen.dart';
 import 'package:shopping_app/product_management/screen/product_management_screen.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -47,6 +48,20 @@ class AppDrawer extends StatelessWidget {
                   ),
                 )
               : const SizedBox.shrink(),
+          Card(
+            elevation: 2,
+            child: ListTile(
+              leading: const Icon(Icons.shopping_bag),
+              title: const Text('My Orders'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(
+                  context,
+                  MyOrderScreen.routeName,
+                );
+              },
+            ),
+          ),
           Card(
             elevation: 2,
             child: ListTile(
