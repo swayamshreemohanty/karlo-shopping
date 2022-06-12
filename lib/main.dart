@@ -9,6 +9,7 @@ import 'package:shopping_app/authentication/repository/google_auth_repository.da
 import 'package:shopping_app/authentication/screen/sign_in_screen.dart';
 import 'package:shopping_app/config/routes/application_page_routes.dart';
 import 'package:shopping_app/firebase_options.dart';
+import 'package:shopping_app/home/repository/user_role.dart';
 import 'package:shopping_app/home/screens/home_screen.dart';
 import 'package:shopping_app/utility/loading_screen.dart';
 
@@ -44,44 +45,47 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: _authenticationBloc),
-        BlocProvider<GoogleLoginBloc>(
-          create: (context) => GoogleLoginBloc(
-            googleAuthenticationBloc:
-                BlocProvider.of<GoogleAuthenticationBloc>(context),
-            googleAuthenticationRepository: GoogleAuthenticationRepository(),
+    return RepositoryProvider(
+      create: (context) => UserRoleRepository(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: _authenticationBloc),
+          BlocProvider<GoogleLoginBloc>(
+            create: (context) => GoogleLoginBloc(
+              googleAuthenticationBloc:
+                  BlocProvider.of<GoogleAuthenticationBloc>(context),
+              googleAuthenticationRepository: GoogleAuthenticationRepository(),
+            ),
           ),
-        ),
-      ],
-      child: ScreenUtilInit(
-        designSize: Size(
-          WidgetsBinding.instance.window.physicalSize.width /
-              WidgetsBinding.instance.window.devicePixelRatio,
-          WidgetsBinding.instance.window.physicalSize.height /
-              WidgetsBinding.instance.window.devicePixelRatio,
-        ),
-        builder: (_, child) => MaterialApp(
-          title: 'Karlo Shopping',
-          theme: ThemeData(
-            primarySwatch: Colors.amber,
+        ],
+        child: ScreenUtilInit(
+          designSize: Size(
+            WidgetsBinding.instance.window.physicalSize.width /
+                WidgetsBinding.instance.window.devicePixelRatio,
+            WidgetsBinding.instance.window.physicalSize.height /
+                WidgetsBinding.instance.window.devicePixelRatio,
           ),
-          home:
-              BlocBuilder<GoogleAuthenticationBloc, GoogleAuthenticationState>(
-            builder: (buildContext, state) {
-              if (state is AuthenticationUninitialized) {
-                return const LoadingScreen();
-              } else if (state is AuthenticationAuthenticated) {
-                return const HomeScreen();
-              } else if (state is AuthenticationUnauthenticated) {
-                return const SignInScreen();
-              } else {
-                return const LoadingScreen();
-              }
-            },
+          builder: (_, child) => MaterialApp(
+            title: 'Karlo Shopping',
+            theme: ThemeData(
+              primarySwatch: Colors.amber,
+            ),
+            home: BlocBuilder<GoogleAuthenticationBloc,
+                GoogleAuthenticationState>(
+              builder: (buildContext, state) {
+                if (state is AuthenticationUninitialized) {
+                  return const LoadingScreen();
+                } else if (state is AuthenticationAuthenticated) {
+                  return const HomeScreen();
+                } else if (state is AuthenticationUnauthenticated) {
+                  return const SignInScreen();
+                } else {
+                  return const LoadingScreen();
+                }
+              },
+            ),
+            onGenerateRoute: ScreenRouter().onGeneratedRouter,
           ),
-          onGenerateRoute: ScreenRouter().onGeneratedRouter,
         ),
       ),
     );
