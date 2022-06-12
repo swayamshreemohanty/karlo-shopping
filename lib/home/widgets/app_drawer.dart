@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/authentication/logic/authentication/google_authentication_bloc.dart';
+import 'package:shopping_app/home/repository/user_role.dart';
 
 class AppDrawer extends StatelessWidget {
   final User userDetails;
@@ -29,6 +30,16 @@ class AppDrawer extends StatelessWidget {
               '${userDetails.email}',
             ),
           ),
+          context.read<UserRoleRepository>().isAdmin
+              ? Card(
+                  elevation: 2,
+                  child: ListTile(
+                    leading: const Icon(Icons.add_box),
+                    title: const Text('Add Item'),
+                    onTap: () {},
+                  ),
+                )
+              : const SizedBox.shrink(),
           Card(
             elevation: 2,
             child: ListTile(
