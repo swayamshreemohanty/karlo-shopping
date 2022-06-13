@@ -75,7 +75,7 @@ class CartManagementCubit extends Cubit<CartManagementState> {
 
         ShowSnackBar.showSnackBar(
           context,
-          "Product added to cart.",
+          "${product.productName} added to cart.",
           action: SnackBarAction(
               label: 'Undo',
               onPressed: () async {
