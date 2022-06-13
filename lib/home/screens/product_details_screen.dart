@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app/cart/logic/cart_management/cart_management_cubit.dart';
 import 'package:shopping_app/home/widgets/app_bar_header.dart';
 import 'package:shopping_app/model/product_model.dart';
 import 'package:shopping_app/product_management/widgets/product_showcase_tile.dart';
@@ -22,6 +24,18 @@ class ProductDetailsScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: const AppBarHeader(title: "Details"),
+        actions: [
+          IconButton(
+              iconSize: 25.sp,
+              color: Colors.black,
+              onPressed: () {
+                context.read<CartManagementCubit>().addProducttoServerCart(
+                      product: productModel,
+                      context: context,
+                    );
+              },
+              icon: const Icon(Icons.add_shopping_cart))
+        ],
       ),
       body: Container(
         color: Colors.white,
