@@ -46,19 +46,6 @@ class MyOrderWidget extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                'Order Id: ',
-                style: _header(),
-              ),
-              Text(
-                cartproductsummary.orderId!,
-                style: _titleContentTextStyle(),
-              ),
-            ],
-          ),
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text(
                 'Total Amount: ',
                 style: _header(),
               ),
@@ -77,6 +64,19 @@ class MyOrderWidget extends StatelessWidget {
               ),
               Text(
                 cartproductsummary.cartProductsList.length.toString(),
+                style: _titleContentTextStyle(),
+              ),
+            ],
+          ),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                'Order Id: ',
+                style: _header(),
+              ),
+              Text(
+                cartproductsummary.orderId!,
                 style: _titleContentTextStyle(),
               ),
             ],
