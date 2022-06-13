@@ -59,6 +59,19 @@ class MyOrderWidget extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
+                'Total Amount: ',
+                style: _header(),
+              ),
+              Text(
+                "₹ ${cartproductsummary.totalPrice}",
+                style: _titleContentTextStyle(),
+              ),
+            ],
+          ),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
                 'Quantity: ',
                 style: _header(),
               ),
